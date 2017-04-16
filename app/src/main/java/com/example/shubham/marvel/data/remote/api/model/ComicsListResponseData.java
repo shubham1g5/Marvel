@@ -5,6 +5,6 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-class ComicsListResponseData {
+public class ComicsListResponseData {
     public final List<ApiComic> results;
 }

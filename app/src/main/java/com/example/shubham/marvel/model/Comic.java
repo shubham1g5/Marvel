@@ -1,5 +1,9 @@
 package com.example.shubham.marvel.model;
 
+import android.content.ContentValues;
+
+import com.example.shubham.marvel.data.local.ComicsContract;
+
 import java.util.List;
 
 import lombok.Builder;
@@ -15,6 +19,5 @@ public class Comic {
     private final String image;
     private final int pages;
     private final double price;
-
     private final List<Author> authors;
 }

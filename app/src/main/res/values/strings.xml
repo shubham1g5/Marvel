@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Marvel</string>
+    <string name="marvel_api_key">d4c1ae61f971467aaf04d6b2f0fc8525</string>
 </resources>
