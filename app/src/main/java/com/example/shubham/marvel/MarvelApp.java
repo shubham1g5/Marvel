@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.example.shubham.marvel.data.ComicsRepositoryComponent;
 import com.example.shubham.marvel.data.ComicsRepositoryModule;
+import com.example.shubham.marvel.data.DaggerComicsRepositoryComponent;
 
 public class MarvelApp extends Application {
 
@@ -14,7 +15,7 @@ public class MarvelApp extends Application {
         super.onCreate();
         comicsRepositoryComponent = DaggerComicsRepositoryComponent.builder()
                 .comicsRepositoryModule(new ComicsRepositoryModule())
-                .headlineAppModule(new MarvelAppModule(this))
+                .marvelAppModule(new MarvelAppModule(this))
                 .build();
     }
 

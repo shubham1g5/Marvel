@@ -5,6 +5,10 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
     defaultConfig {
         applicationId "com.example.shubham.marvel"
         minSdkVersion rootProject.ext.minSdkVersion

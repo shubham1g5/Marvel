@@ -1,7 +1,7 @@
 package com.example.shubham.marvel.data;
 
 import com.example.shubham.marvel.MarvelAppModule;
-import com.example.shubham.marvel.data.common.SchedulerModule;
+import com.example.shubham.marvel.common.SchedulerModule;
 
 import javax.inject.Singleton;
 

@@ -4,18 +4,24 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.example.shubham.marvel.R;
+import com.example.shubham.marvel.common.HashUtils;
 import com.example.shubham.marvel.data.local.ComicsDbHelper;
+import com.example.shubham.marvel.data.local.LocalComicsDataSource;
 import com.example.shubham.marvel.data.remote.ComicMapper;
 import com.example.shubham.marvel.data.remote.MarvelService;
+import com.example.shubham.marvel.data.remote.RemoteComicsDataSource;
 import com.google.gson.Gson;
 import com.squareup.sqlbrite.BriteDatabase;
 import com.squareup.sqlbrite.SqlBrite;
+
+import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import okhttp3.Headers;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -27,8 +33,25 @@ import rx.Scheduler;
 @Module
 public class ComicsRepositoryModule {
 
-    private static final String HEADER_API_KEY = "api-key";
-    private static final String BASE_URL = "https://gateway.marvel.com:443/v1/public";
+    private static final String HEADER_API_KEY = "apikey";
+    private static final String HEADER_TS = "ts";
+    private static final String HEADER_HASH = "hash";
+    private static final String BASE_URL = "https://gateway.marvel.com:443/v1/public/";
+
+
+    @Singleton
+    @Provides
+    @Local
+    ComicsDataSource provideLocalComicsDataSource(BriteDatabase briteDatabase, ComicMapper comicMapper) {
+        return new LocalComicsDataSource(briteDatabase, comicMapper);
+    }
+
+    @Singleton
+    @Provides
+    @Remote
+    ComicsDataSource provideRemoteComicsDataSource(MarvelService marvelService, ComicMapper comicMapper) {
+        return new RemoteComicsDataSource(marvelService, comicMapper);
+    }
 
 
     @Singleton
@@ -64,10 +87,26 @@ public class ComicsRepositoryModule {
 
     private Interceptor getAuthInterceptor(Resources resources) {
         return chain -> {
-            Request original = chain.request();
-            Headers.Builder hb = original.headers().newBuilder();
-            hb.add(HEADER_API_KEY, resources.getString(R.string.marvel_api_key));
-            return chain.proceed(original.newBuilder().headers(hb.build()).build());
+            Request request = chain.request();
+
+            try {
+                String timeStamp = "" + new Date().getTime();
+                String hashString = timeStamp + resources.getString(R.string.marvel_private_api_key)
+                        + resources.getString(R.string.marvel_api_key);
+
+                HttpUrl url = request.url().newBuilder()
+                        .addQueryParameter(HEADER_TS, timeStamp)
+                        .addQueryParameter(HEADER_API_KEY, resources.getString(R.string.marvel_api_key))
+                        .addQueryParameter(HEADER_HASH, HashUtils.MD5(hashString))
+                        .build();
+                request = request.newBuilder().url(url).build();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+
+            return chain.proceed(request);
         };
     }
+
+
 }

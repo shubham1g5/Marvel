@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+
+    <dimen name="detail_photo_height">300dp</dimen>
+    <dimen name="detail_body_horiz_margin">0dp</dimen>
+    <dimen name="detail_body_overlap">0dp</dimen>
+    <dimen name="detail_body_elevation">0dp</dimen>
+    <dimen name="action_bar_menu_item_size">48dp</dimen>
+</resources>

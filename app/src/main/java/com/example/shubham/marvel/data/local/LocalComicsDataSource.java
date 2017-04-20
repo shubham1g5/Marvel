@@ -22,7 +22,7 @@ public class LocalComicsDataSource implements ComicsDataSource {
     private final ComicMapper mComicMapper;
 
     @Inject
-    LocalComicsDataSource(BriteDatabase db, ComicMapper comicMapper) {
+    public LocalComicsDataSource(BriteDatabase db, ComicMapper comicMapper) {
         mDb = db;
         mComicMapper = comicMapper;
     }

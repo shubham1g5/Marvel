@@ -70,7 +70,8 @@ public class ComicsRepository implements ComicsDataSource {
                 .flatMap(comics -> Observable.fromIterable(comics))
                 .doOnNext(comic -> mLocalComicsDataSource.saveComic(comic))
                 .doOnNext(comic -> mCachedComics.put(comic.getId(), comic))
-                .toList().toObservable();
+                .toList().toObservable()
+                .doOnComplete(() -> mCacheIsDirty = false);
     }
 
     @Override
@@ -84,5 +85,9 @@ public class ComicsRepository implements ComicsDataSource {
 
     @Override
     public void removeAll() {
+    }
+
+    public void refreshComics(boolean refresh) {
+        mCacheIsDirty = true;
     }
 }

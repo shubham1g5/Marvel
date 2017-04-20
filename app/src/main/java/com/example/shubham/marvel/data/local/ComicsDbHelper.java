@@ -25,7 +25,7 @@ public class ComicsDbHelper extends SQLiteOpenHelper {
                     ComicsContract.ComicsEntry._ID + TEXT_TYPE + PRIMARY_KEY + COMMA_SEP +
                     ComicsContract.ComicsEntry.COL_TITLE + TEXT_TYPE + NOT_NULL + COMMA_SEP +
                     ComicsContract.ComicsEntry.COL_DESCRIPTION + TEXT_TYPE + COMMA_SEP +
-                    ComicsContract.ComicsEntry.COL_PAGES + TEXT_TYPE + COMMA_SEP +
+                    ComicsContract.ComicsEntry.COL_IMAGE + TEXT_TYPE + COMMA_SEP +
                     ComicsContract.ComicsEntry.COL_PAGES + TEXT_TYPE + COMMA_SEP +
                     ComicsContract.ComicsEntry.COL_PRICE + REAL_TYPE + COMMA_SEP +
                     ComicsContract.ComicsEntry.COL_THUMBNAIL + TEXT_TYPE +
@@ -42,7 +42,7 @@ public class ComicsDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + ComicsContract.ComicHasAuthorsEntry.TABLE_NAME + " (" +
                     ComicsContract.ComicHasAuthorsEntry._ID + TEXT_TYPE + PRIMARY_KEY + COMMA_SEP +
                     ComicsContract.ComicHasAuthorsEntry.COL_COMIC_ID + TEXT_TYPE + NOT_NULL + COMMA_SEP +
-                    ComicsContract.ComicHasAuthorsEntry.COL_AUTHOR_ID + TEXT_TYPE + NOT_NULL +
+                    ComicsContract.ComicHasAuthorsEntry.COL_AUTHOR_ID + TEXT_TYPE + NOT_NULL + COMMA_SEP +
 
                     FOREIGN_KEY + ComicsContract.ComicHasAuthorsEntry.COL_COMIC_ID + REFERENCES +
                     ComicsContract.ComicsEntry.TABLE_NAME + " (" + ComicsContract.ComicsEntry._ID + ")" + COMMA_SEP +

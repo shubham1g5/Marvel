@@ -1,13 +1,17 @@
-package com.example.shubham.marvel.data.common;
+package com.example.shubham.marvel.common;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import javax.inject.Qualifier;
+import javax.inject.Scope;
 
-@Qualifier
+/**
+ * custom scope to be used by all fragment components.
+ */
 @Documented
+@Scope
 @Retention(RetentionPolicy.RUNTIME)
-public @interface UI {
+public @interface FragmentScoped {
 }
+

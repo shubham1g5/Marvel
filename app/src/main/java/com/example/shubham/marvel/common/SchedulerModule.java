@@ -1,4 +1,4 @@
-package com.example.shubham.marvel.data.common;
+package com.example.shubham.marvel.common;
 
 import dagger.Module;
 import dagger.Provides;

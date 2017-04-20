@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Marvel</string>
     <string name="marvel_api_key">d4c1ae61f971467aaf04d6b2f0fc8525</string>
+    <string name="marvel_private_api_key">add95564e2738cbd0478b4d841bcf22671cfe530</string>
+    <string name="no_comics">Pull down to refresh</string>
 </resources>

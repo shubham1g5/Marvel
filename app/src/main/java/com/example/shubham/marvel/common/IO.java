@@ -1,4 +1,4 @@
-package com.example.shubham.marvel.data.common;
+package com.example.shubham.marvel.common;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

@@ -17,7 +17,7 @@ public class RemoteComicsDataSource implements ComicsDataSource {
     private final ComicMapper mComicMapper;
 
     @Inject
-    RemoteComicsDataSource(MarvelService marvelService, ComicMapper comicMapper) {
+    public RemoteComicsDataSource(MarvelService marvelService, ComicMapper comicMapper) {
         mMarvelService = marvelService;
         mComicMapper = comicMapper;
     }
@@ -35,5 +35,9 @@ public class RemoteComicsDataSource implements ComicsDataSource {
 
     @Override
     public void saveComic(Comic comic) {
+    }
+
+    @Override
+    public void removeAll() {
     }
 }
