@@ -53,9 +53,9 @@ public class ComicsListFragment extends Fragment implements ComicsListPresenter.
     @Inject
     ComicsListPresenter mPresenter;
 
-    private ComicsListAdapter adapter;
+    private ComicsListAdapter mAdapter;
 
-    private Unbinder unbinder;
+    private Unbinder mUnbinder;
 
 
     @Override
@@ -73,7 +73,7 @@ public class ComicsListFragment extends Fragment implements ComicsListPresenter.
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comics_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
         setUpToolBar();
         setUpListView();
         mPresenter.register(this);
@@ -86,19 +86,19 @@ public class ComicsListFragment extends Fragment implements ComicsListPresenter.
     }
 
     private void setUpListView() {
-        adapter = new ComicsListAdapter(getActivity());
+        mAdapter = new ComicsListAdapter(getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(mAdapter);
     }
 
     @Override
     public void showComics(List<Comic> comics) {
-        adapter.showComics(comics);
+        mAdapter.showComics(comics);
     }
 
     @Override
     public Observable<Comic> onComicClicked() {
-        return adapter.getComicClickSubject();
+        return mAdapter.getComicClickSubject();
     }
 
     @Override
@@ -127,7 +127,7 @@ public class ComicsListFragment extends Fragment implements ComicsListPresenter.
     @Override
     public void onDestroy() {
         mPresenter.unregister();
-        unbinder.unbind();
+        mUnbinder.unbind();
         super.onDestroy();
     }
 

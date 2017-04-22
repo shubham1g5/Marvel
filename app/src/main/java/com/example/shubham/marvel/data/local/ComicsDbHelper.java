@@ -16,6 +16,7 @@ public class ComicsDbHelper extends SQLiteOpenHelper {
     private static final String COMMA_SEP = ",";
     private static final String NOT_NULL = "NOT NULL";
     private static final String PRIMARY_KEY = " PRIMARY KEY";
+    private static final String UNIQUE = " UNIQUE";
     private static final String FOREIGN_KEY = " FOREIGN KEY (";
     private static final String REFERENCES = ") REFERENCES ";
 
@@ -35,26 +36,17 @@ public class ComicsDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + ComicsContract.AuthorsEntry.TABLE_NAME + " (" +
                     ComicsContract.AuthorsEntry._ID + TEXT_TYPE + PRIMARY_KEY + COMMA_SEP +
                     ComicsContract.AuthorsEntry.COL_NAME + TEXT_TYPE + NOT_NULL + COMMA_SEP +
-                    ComicsContract.AuthorsEntry.COL_ROLE + TEXT_TYPE + NOT_NULL +
+                    ComicsContract.AuthorsEntry.COL_ROLE + TEXT_TYPE + NOT_NULL + COMMA_SEP +
+                    ComicsContract.AuthorsEntry.COL_COMIC_ID + TEXT_TYPE + NOT_NULL + COMMA_SEP +
+
+                    FOREIGN_KEY + ComicsContract.AuthorsEntry.COL_COMIC_ID + REFERENCES +
+                    ComicsContract.ComicsEntry.TABLE_NAME + " (" + ComicsContract.ComicsEntry._ID + ")" +
                     " )";
 
-    private static final String SQL_CREATE_COMIC_HAS_AUTHOR_ENTRY =
-            "CREATE TABLE " + ComicsContract.ComicHasAuthorsEntry.TABLE_NAME + " (" +
-                    ComicsContract.ComicHasAuthorsEntry._ID + TEXT_TYPE + PRIMARY_KEY + COMMA_SEP +
-                    ComicsContract.ComicHasAuthorsEntry.COL_COMIC_ID + TEXT_TYPE + NOT_NULL + COMMA_SEP +
-                    ComicsContract.ComicHasAuthorsEntry.COL_AUTHOR_ID + TEXT_TYPE + NOT_NULL + COMMA_SEP +
-
-                    FOREIGN_KEY + ComicsContract.ComicHasAuthorsEntry.COL_COMIC_ID + REFERENCES +
-                    ComicsContract.ComicsEntry.TABLE_NAME + " (" + ComicsContract.ComicsEntry._ID + ")" + COMMA_SEP +
-
-                    FOREIGN_KEY + ComicsContract.ComicHasAuthorsEntry.COL_AUTHOR_ID + REFERENCES +
-                    ComicsContract.AuthorsEntry.TABLE_NAME + " (" + ComicsContract.AuthorsEntry._ID + ")" +
-                    " )";
 
     private static final String[] createStmts = new String[]{
             SQL_CREATE_COMIC_ENTRY,
             SQL_CREATE_AUTHOR_ENTRY,
-            SQL_CREATE_COMIC_HAS_AUTHOR_ENTRY
     };
 
 
@@ -75,7 +67,6 @@ public class ComicsDbHelper extends SQLiteOpenHelper {
         String[] tables = new String[]{
                 ComicsContract.ComicsEntry.TABLE_NAME,
                 ComicsContract.AuthorsEntry.TABLE_NAME,
-                ComicsContract.ComicHasAuthorsEntry.TABLE_NAME
         };
 
         for (String table : tables) {

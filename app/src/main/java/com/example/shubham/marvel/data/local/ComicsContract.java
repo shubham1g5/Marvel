@@ -22,11 +22,6 @@ public class ComicsContract {
         public static final String TABLE_NAME = "author";
         public static final String COL_NAME = "name";
         public static final String COL_ROLE = "role";
-    }
-
-    public static abstract class ComicHasAuthorsEntry implements BaseColumns {
-        public static final String TABLE_NAME = "comic_has_author";
         public static final String COL_COMIC_ID = "comic_id";
-        public static final String COL_AUTHOR_ID = "author_id";
     }
 }

@@ -2,6 +2,7 @@ package com.example.shubham.marvel.data;
 
 import android.support.annotation.Nullable;
 
+import com.example.shubham.marvel.model.Author;
 import com.example.shubham.marvel.model.Comic;
 
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class ComicsRepository implements ComicsDataSource {
 
     private Observable<List<Comic>> getAndSaveRemoteComics(int capacity) {
         return mRemoteComicsDataSource.getComics(capacity)
-                .doOnNext(comic -> mLocalComicsDataSource.removeAll())
+                .doOnNext(comics -> mLocalComicsDataSource.removeAll())
                 .flatMap(comics -> Observable.fromIterable(comics))
                 .doOnNext(comic -> mLocalComicsDataSource.saveComic(comic))
                 .doOnNext(comic -> mCachedComics.put(comic.getId(), comic))
@@ -75,16 +76,16 @@ public class ComicsRepository implements ComicsDataSource {
     }
 
     @Override
-    public Observable<Comic> getComic(int comicId) {
-        return null;
-    }
-
-    @Override
     public void saveComic(Comic comic) {
     }
 
     @Override
     public void removeAll() {
+    }
+
+    @Override
+    public Observable<List<Author>> getAuthors(int comicId) {
+        return mLocalComicsDataSource.getAuthors(comicId);
     }
 
     public void refreshComics(boolean refresh) {

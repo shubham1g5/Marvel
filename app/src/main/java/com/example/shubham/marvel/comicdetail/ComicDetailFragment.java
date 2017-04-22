@@ -7,7 +7,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +23,10 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.shubham.marvel.MarvelApp;
 import com.example.shubham.marvel.R;
+import com.example.shubham.marvel.model.Author;
 import com.example.shubham.marvel.model.Comic;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -41,13 +47,23 @@ public class ComicDetailFragment extends Fragment implements ComicDetailPresente
     @BindView(R.id.comic_body)
     TextView comicBodyTv;
 
+    @BindView(R.id.comic_price)
+    TextView comicPriceTv;
+
+    @BindView(R.id.comic_pages)
+    TextView comicPagesTv;
+
     @BindView(R.id.comic_image)
     ImageView comicImageView;
 
     @BindView(R.id.app_bar_detail)
     Toolbar toolbar;
 
+    @BindView(R.id.authors_recyclerview)
+    RecyclerView authorsRecyclerView;
+
     private Unbinder unbinder;
+    private AuthorsListAdapter mAuthorsListAdapter;
 
     public static ComicDetailFragment newInstance(Comic comic) {
         ComicDetailFragment comicDetailFragment = new ComicDetailFragment();
@@ -80,7 +96,14 @@ public class ComicDetailFragment extends Fragment implements ComicDetailPresente
         unbinder = ButterKnife.bind(this, view);
         mPresenter.register(this);
         setUpToolBar();
+        setUpAuthorsListView();
         return view;
+    }
+
+    private void setUpAuthorsListView() {
+        mAuthorsListAdapter = new AuthorsListAdapter(getActivity());
+        authorsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        authorsRecyclerView.setAdapter(mAuthorsListAdapter);
     }
 
     private void setUpToolBar() {
@@ -114,8 +137,8 @@ public class ComicDetailFragment extends Fragment implements ComicDetailPresente
     }
 
     @Override
-    public void displayBody(String body) {
-        comicBodyTv.setText(body);
+    public void displayDescription(Spanned description) {
+        comicBodyTv.setText(description);
     }
 
     @Override
@@ -130,6 +153,21 @@ public class ComicDetailFragment extends Fragment implements ComicDetailPresente
                         setStatusBarColorFromBitmap(bitmap);
                     }
                 });
+    }
+
+    @Override
+    public void showAuthors(List<Author> authors) {
+        mAuthorsListAdapter.showAuthors(authors);
+    }
+
+    @Override
+    public void displayPrice(double price) {
+        comicPriceTv.setText(getString(R.string.price_format, price));
+    }
+
+    @Override
+    public void displayPageCount(int pages) {
+        comicPagesTv.setText(getString(R.string.pages_format, pages));
     }
 
     private void setStatusBarColorFromBitmap(Bitmap bitmap) {

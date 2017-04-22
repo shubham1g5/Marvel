@@ -2,6 +2,7 @@ package com.example.shubham.marvel.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ public class Comic implements Parcelable {
     private final int pages;
     private final double price;
 
+    @Nullable
     private List<Author> authors;
 
     protected Comic(Parcel in) {

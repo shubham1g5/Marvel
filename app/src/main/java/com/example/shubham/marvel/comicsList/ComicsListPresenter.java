@@ -1,6 +1,5 @@
 package com.example.shubham.marvel.comicsList;
 
-import com.example.shubham.marvel.R;
 import com.example.shubham.marvel.common.BasePresenter;
 import com.example.shubham.marvel.common.BasePresenterView;
 import com.example.shubham.marvel.common.IO;
@@ -18,15 +17,15 @@ import io.reactivex.Scheduler;
 public class ComicsListPresenter extends BasePresenter<ComicsListPresenter.View> {
     private static final int CAPACITY = 100;
 
-    private final Scheduler uiScheduler;
-    private final Scheduler ioScheduler;
-    private final ComicsRepository comicsRepository;
+    private final Scheduler mUiScheduler;
+    private final Scheduler mIoScheduler;
+    private final ComicsRepository mComicsRepository;
 
     @Inject
     ComicsListPresenter(@UI Scheduler uiScheduler, @IO Scheduler ioScheduler, ComicsRepository comicsRepository) {
-        this.uiScheduler = uiScheduler;
-        this.ioScheduler = ioScheduler;
-        this.comicsRepository = comicsRepository;
+        mUiScheduler = uiScheduler;
+        mIoScheduler = ioScheduler;
+        mComicsRepository = comicsRepository;
     }
 
     @Override
@@ -34,9 +33,9 @@ public class ComicsListPresenter extends BasePresenter<ComicsListPresenter.View>
 
         addToUnsubscribe(view.onRefreshAction()
                 .doOnNext(ignored -> view.showRefreshing(true))
-                .doOnNext(ignored -> comicsRepository.refreshComics(true))
-                .switchMap(ignored -> comicsRepository.getComics(CAPACITY).subscribeOn(ioScheduler))
-                .observeOn(uiScheduler)
+                .doOnNext(ignored -> mComicsRepository.refreshComics(true))
+                .switchMap(ignored -> mComicsRepository.getComics(CAPACITY).subscribeOn(mIoScheduler))
+                .observeOn(mUiScheduler)
                 .subscribe(comics -> {
                             view.showRefreshing(false);
                             view.showComics(comics);

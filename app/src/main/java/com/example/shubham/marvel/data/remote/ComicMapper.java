@@ -8,6 +8,7 @@ import com.example.shubham.marvel.data.remote.api.model.ApiComic;
 import com.example.shubham.marvel.data.remote.api.model.ComicsListResponse;
 import com.example.shubham.marvel.data.remote.api.model.Price;
 import com.example.shubham.marvel.data.remote.api.model.Thumbnail;
+import com.example.shubham.marvel.model.Author;
 import com.example.shubham.marvel.model.Comic;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class ComicMapper {
         return comics;
     }
 
-    public ContentValues toContentValues(Comic comic) {
+    public ContentValues getContentValuesFromComic(Comic comic) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(ComicsContract.ComicsEntry._ID, comic.getId());
         contentValues.put(ComicsContract.ComicsEntry.COL_TITLE, comic.getTitle());
@@ -83,5 +84,30 @@ public class ComicMapper {
 
     private String getThumbnailUrl(Thumbnail thumbnail, String size) {
         return thumbnail.path + "/" + size + "." + thumbnail.extension;
+    }
+
+    public List<Author> mapAuthors(Cursor cursor) {
+        List<Author> authors = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+            do {
+                authors.add(getAuthorFromCursor(cursor));
+            } while (cursor.moveToNext());
+        }
+
+        return authors;
+    }
+
+    private Author getAuthorFromCursor(Cursor cursor) {
+        return new Author(cursor.getString(cursor.getColumnIndex(ComicsContract.AuthorsEntry.COL_NAME)),
+                cursor.getString(cursor.getColumnIndex(ComicsContract.AuthorsEntry.COL_ROLE)));
+    }
+
+    public ContentValues getContentValuesFromAuthor(Author author, int comicId) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ComicsContract.AuthorsEntry.COL_NAME, author.getName());
+        contentValues.put(ComicsContract.AuthorsEntry.COL_ROLE, author.getRole());
+        contentValues.put(ComicsContract.AuthorsEntry.COL_COMIC_ID, comicId);
+        return contentValues;
     }
 }
