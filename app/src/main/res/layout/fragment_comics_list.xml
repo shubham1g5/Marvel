@@ -17,6 +17,14 @@
             android:background="?attr/colorPrimary"
             app:titleTextColor="@color/white" />
 
+        <com.appyvet.rangebar.RangeBar
+            android:id="@+id/rangebar"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            app:tickStart="5"
+            app:tickInterval="1"
+            app:tickEnd="10"/>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">

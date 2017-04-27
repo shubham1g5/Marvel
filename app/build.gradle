@@ -69,6 +69,8 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     compile "com.google.dagger:dagger:$rootProject.daggerVersion"
 
+    compile "com.appyvet:materialrangebar:$rootProject.materialrangebarVersion"
+
     testCompile "junit:junit:$rootProject.junitVersion"
     testCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
 
