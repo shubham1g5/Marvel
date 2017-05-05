@@ -13,4 +13,5 @@
     <dimen name="comic_detail_pages_horizontal_margin">40dp</dimen>
     <dimen name="author_header_imageview_margin">8dp</dimen>
     <dimen name="comic_detail_field_vertical_margin">8dp</dimen>
+    <dimen name="author_header_margin">8dp</dimen>
 </resources>

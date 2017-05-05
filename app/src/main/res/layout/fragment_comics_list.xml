@@ -22,8 +22,6 @@
             android:id="@+id/pages_tv"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:textColor="@color/white"
-            android:background="@color/colorPrimary"
             android:layout_height="wrap_content"
             tools:text="Total pages: 43" />
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.example.shubham.marvel.R;
-import com.example.shubham.marvel.common.HashUtils;
+import com.example.shubham.marvel.common.Utils;
 import com.example.shubham.marvel.data.local.ComicsDbHelper;
 import com.example.shubham.marvel.data.local.LocalComicsDataSource;
 import com.example.shubham.marvel.data.remote.MarvelService;
@@ -96,7 +96,7 @@ public class ComicsRepositoryModule {
                 HttpUrl url = request.url().newBuilder()
                         .addQueryParameter(HEADER_TS, timeStamp)
                         .addQueryParameter(HEADER_API_KEY, resources.getString(R.string.marvel_api_key))
-                        .addQueryParameter(HEADER_HASH, HashUtils.MD5(hashString))
+                        .addQueryParameter(HEADER_HASH, Utils.MD5(hashString))
                         .build();
                 request = request.newBuilder().url(url).build();
             } catch (NoSuchAlgorithmException e) {

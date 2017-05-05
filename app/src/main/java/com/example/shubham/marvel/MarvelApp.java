@@ -4,8 +4,6 @@ import android.app.Application;
 
 import com.example.shubham.marvel.data.ComicsRepositoryModule;
 
-// TODO: 3/5/17  Offline Items
-// TODO: 5/5/17 Rotation
 // TODO: 22/4/17 Test Cases For Repositories and Presenters
 public class MarvelApp extends Application {
 

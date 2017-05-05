@@ -2,12 +2,14 @@ package com.example.shubham.marvel.comicdetail;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.shubham.marvel.R;
+import com.example.shubham.marvel.common.Utils;
 import com.example.shubham.marvel.model.Author;
 
 import java.util.ArrayList;
@@ -91,8 +93,7 @@ class AuthorsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         void bind(Author author) {
             ButterKnife.bind(this, itemView);
             nameTextView.setText(author.getName());
-            roleTextView.setText(author.getRole());
-
+            roleTextView.setText(Utils.toSentenceCase(author.getRole()));
         }
     }
 }

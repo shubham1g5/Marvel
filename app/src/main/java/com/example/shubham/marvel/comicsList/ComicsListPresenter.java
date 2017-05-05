@@ -18,6 +18,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
+import io.reactivex.functions.Consumer;
 
 public class ComicsListPresenter extends BasePresenter<ComicsListPresenter.View> {
     private static final int CAPACITY = 100;
@@ -39,22 +40,21 @@ public class ComicsListPresenter extends BasePresenter<ComicsListPresenter.View>
     @Override
     protected void onRegister(View view) {
 
+        view.showRefreshing(true);
+
         addToUnsubscribe(view.onRefreshAction()
                 .doOnNext(ignored -> view.showRefreshing(true))
                 .doOnNext(ignored -> mComicsRepository.refreshComics(true))
                 .switchMap(ignored -> mComicsRepository.getComics(CAPACITY).subscribeOn(mIoScheduler))
                 .observeOn(mUiScheduler)
-                .subscribe(comics -> {
-                            view.showRefreshing(false);
-                            mComics = comics;
-                            displayComics(view, mComics);
-                        },
-                        throwable -> {
-                            throwable.printStackTrace();
-                            view.showRefreshing(false);
-                            view.showTotalPages(0);
-                            view.showMessage(R.string.error);
-                        }));
+                .subscribe(getfetchComicsSuccessConsumer(view),
+                        getfetchComicsErrorConsumer(view)));
+
+        addToUnsubscribe(mComicsRepository.getComics(CAPACITY)
+                .subscribeOn(mIoScheduler)
+                .observeOn(mUiScheduler)
+                .subscribe(getfetchComicsSuccessConsumer(view),
+                        getfetchComicsErrorConsumer(view)));
 
         addToUnsubscribe(view.onComicClicked()
                 .subscribe(comic -> view.openComicDetail(comic)));
@@ -67,6 +67,22 @@ public class ComicsListPresenter extends BasePresenter<ComicsListPresenter.View>
                 .subscribe(event -> filterComicsByBudget(view, ((BudgetChangedEvent) event).getBudget())));
     }
 
+    private Consumer<? super Throwable> getfetchComicsErrorConsumer(View view) {
+        return throwable -> {
+            throwable.printStackTrace();
+            view.showRefreshing(false);
+            view.showMessage(R.string.error);
+        };
+    }
+
+    private Consumer<? super List<Comic>> getfetchComicsSuccessConsumer(View view) {
+        return (Consumer<List<Comic>>) comics -> {
+            view.showRefreshing(false);
+            mComics = comics;
+            displayComics(view, mComics);
+        };
+    }
+
     private void displayComics(View view, List<Comic> comics) {
         if (comics != null) {
             view.showComics(comics);
@@ -77,7 +93,7 @@ public class ComicsListPresenter extends BasePresenter<ComicsListPresenter.View>
 
     private void filterComicsByBudget(View view, String budget) {
         if(budget!=null && !budget.isEmpty() && mComics!=null){
-            int budgetVal = Integer.parseInt(budget);
+            Double budgetVal = Double.parseDouble(budget);
             ArrayList<Comic> comicsInBudget = new ArrayList<>();
             for (Comic mComic : mComics) {
                 if(mComic.getPrice() <= budgetVal){

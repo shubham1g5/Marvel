@@ -111,8 +111,7 @@ public class ComicsListFragment extends Fragment implements ComicsListPresenter.
 
     @Override
     public Observable<Object> onRefreshAction() {
-        return RxSwipeRefreshLayout.refreshes(swipeRefreshLayout)
-                .startWith((Notification.INSTANCE));
+        return RxSwipeRefreshLayout.refreshes(swipeRefreshLayout);
     }
 
     @Override

@@ -78,6 +78,10 @@ public class ComicsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @BindView(R.id.comic_title_textview)
         TextView titleTextView;
 
+
+        @BindView(R.id.comic_price_textview)
+        TextView priceTextView;
+
         @BindView(R.id.comic_thumbnail_imageview)
         ImageView thumbnailImageView;
 
@@ -90,6 +94,7 @@ public class ComicsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         void bind(Comic comic) {
             ButterKnife.bind(this, itemView);
             titleTextView.setText(comic.getTitle());
+            priceTextView.setText(context.getString(R.string.price_format, comic.getPrice()));
 
             Glide.with(context).load(comic.getThumbnail()).asBitmap().into(new BitmapImageViewTarget(thumbnailImageView) {
                 @Override
