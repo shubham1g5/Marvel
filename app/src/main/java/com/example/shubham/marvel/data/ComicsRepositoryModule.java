@@ -7,7 +7,6 @@ import com.example.shubham.marvel.R;
 import com.example.shubham.marvel.common.HashUtils;
 import com.example.shubham.marvel.data.local.ComicsDbHelper;
 import com.example.shubham.marvel.data.local.LocalComicsDataSource;
-import com.example.shubham.marvel.data.remote.ComicMapper;
 import com.example.shubham.marvel.data.remote.MarvelService;
 import com.example.shubham.marvel.data.remote.RemoteComicsDataSource;
 import com.google.gson.Gson;

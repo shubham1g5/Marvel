@@ -1,5 +1,6 @@
 package com.example.shubham.marvel.data.remote;
 
+import com.example.shubham.marvel.data.ComicMapper;
 import com.example.shubham.marvel.data.ComicsDataSource;
 import com.example.shubham.marvel.model.Author;
 import com.example.shubham.marvel.model.Comic;
@@ -9,7 +10,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.reactivex.Completable;
 import io.reactivex.Observable;
 
 @Singleton

@@ -4,8 +4,23 @@
     <string name="marvel_private_api_key">add95564e2738cbd0478b4d841bcf22671cfe530</string>
     <string name="no_comics">Pull down to refresh</string>
 
+    <string name="authors_list_header">Authors</string>
+    <string name="error">Error loading comics. Please try again.</string>
+    <string name="total_pages_label">Total Pages: </string>
+    <string name="action_filter">Filter</string>
+    <string name="set_budget_label">Set Max Budget</string>
+    <string name="comics_list_filter_dialogue_title">Budget</string>
+
     <!--formats-->
     <string name="price_format" translatable="false">%.2f$</string>
-    <string name="pages_format">%d Pages</string>
-    <string name="authors_list_header">Authors</string>
+    <string name="total_pages_format">Total Pages: %d</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+
+    <plurals name="pages">
+        <item quantity="one">%d Page</item>
+        <item quantity="other">%d Pages</item>
+    </plurals>
+
+
 </resources>

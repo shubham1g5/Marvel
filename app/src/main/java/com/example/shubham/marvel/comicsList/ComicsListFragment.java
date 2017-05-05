@@ -13,6 +13,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -23,7 +26,7 @@ import com.example.shubham.marvel.comicdetail.ComicDetailActivity;
 import com.example.shubham.marvel.model.Comic;
 import com.jakewharton.rxbinding2.internal.Notification;
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout;
-
+import com.jakewharton.rxbinding2.support.v7.widget.RxToolbar;
 
 import java.util.List;
 
@@ -34,9 +37,10 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.Observable;
 
-public class ComicsListFragment extends Fragment implements ComicsListPresenter.View{
+public class ComicsListFragment extends Fragment implements ComicsListPresenter.View {
 
     public static final String EXTRA_COMIC = "com.example.shubham.marvel.extra_comic";
+    private static final String FILTER_DIALOGUE = "filter_dialogue";
 
     @BindView(R.id.comics_swiperefreshlayout)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -49,6 +53,9 @@ public class ComicsListFragment extends Fragment implements ComicsListPresenter.
 
     @BindView(R.id.empty_tv)
     TextView emptyTv;
+
+    @BindView(R.id.pages_tv)
+    TextView pagesTv;
 
     @Inject
     ComicsListPresenter mPresenter;
@@ -64,7 +71,7 @@ public class ComicsListFragment extends Fragment implements ComicsListPresenter.
 
         // Inject Presenter
         DaggerComicsListComponent.builder()
-                .comicsRepositoryComponent(((MarvelApp) getActivity().getApplication()).getComicsRepositoryComponent())
+                .appComponent(((MarvelApp) getActivity().getApplication()).getAppComponent())
                 .build()
                 .inject(this);
     }
@@ -77,6 +84,7 @@ public class ComicsListFragment extends Fragment implements ComicsListPresenter.
         setUpToolBar();
         setUpListView();
         mPresenter.register(this);
+        setHasOptionsMenu(true);
         return view;
     }
 
@@ -108,6 +116,17 @@ public class ComicsListFragment extends Fragment implements ComicsListPresenter.
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.comics_list_frag_menu, menu);
+    }
+
+    @Override
+    public Observable<MenuItem> onFilterAction() {
+        return RxToolbar.itemClicks(toolbar)
+                .filter(menuItem -> menuItem.getItemId() == R.id.action_filter);
+    }
+
+    @Override
     public void openComicDetail(Comic comic) {
         Intent intent = new Intent(getActivity(), ComicDetailActivity.class);
         intent.putExtra(EXTRA_COMIC, comic);
@@ -117,6 +136,18 @@ public class ComicsListFragment extends Fragment implements ComicsListPresenter.
     @Override
     public void showEmptyView(boolean visible) {
         emptyTv.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void showTotalPages(int pages) {
+        pagesTv.setText(getResources().getString(R.string.total_pages_format, pages));
+    }
+
+    @Override
+    public void showFilters() {
+        ComicsListFilterDialogFragment comicsListFilterDialogFragment = new ComicsListFilterDialogFragment();
+        comicsListFilterDialogFragment.setTargetFragment(this, 0);
+        comicsListFilterDialogFragment.show(getFragmentManager(), FILTER_DIALOGUE);
     }
 
     @Override

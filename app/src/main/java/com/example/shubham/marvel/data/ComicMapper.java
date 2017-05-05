@@ -1,4 +1,4 @@
-package com.example.shubham.marvel.data.remote;
+package com.example.shubham.marvel.data;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -70,6 +70,7 @@ public class ComicMapper {
                 .image(getThumbnailUrl(apiComic.thumbnail,SIZE_LANDSCAPE_XLARGE))
                 .authors(apiComic.creators.items)
                 .price(getPrice(apiComic.prices, PRICE_TYPE_PRINT))
+                .pages(apiComic.pageCount)
                 .build();
     }
 

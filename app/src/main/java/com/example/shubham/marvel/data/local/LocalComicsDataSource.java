@@ -3,7 +3,7 @@ package com.example.shubham.marvel.data.local;
 import android.database.Cursor;
 
 import com.example.shubham.marvel.data.ComicsDataSource;
-import com.example.shubham.marvel.data.remote.ComicMapper;
+import com.example.shubham.marvel.data.ComicMapper;
 import com.example.shubham.marvel.model.Author;
 import com.example.shubham.marvel.model.Comic;
 import com.squareup.sqlbrite.BriteDatabase;

@@ -26,7 +26,6 @@ import io.reactivex.subjects.PublishSubject;
 
 public class ComicsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-
     private final List<Comic> comics = new ArrayList<>();
     private static Context context;
     private PublishSubject<Comic> mComicClickSubject;
@@ -54,7 +53,6 @@ public class ComicsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 .takeUntil(RxView.detaches(((ComicViewHolder) holder).getParentView()))
                 .map(aVoid -> comic)
                 .subscribe(mComicClickSubject);
-
     }
 
 

@@ -55,6 +55,7 @@ dependencies {
     compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:$rootProject.rxbindingVersion"
     compile "com.squareup.sqlbrite:sqlbrite:$rootProject.sqlbriteVersion"
     compile "com.github.akarnokd:rxjava2-interop:$rootProject.rxjava2interopVersion"
+    compile "com.jakewharton.rxrelay2:rxrelay:$rootProject.rxrelayVersion"
 
     compile "com.google.code.gson:gson:$rootProject.gsonVersion"
 
@@ -68,8 +69,6 @@ dependencies {
     // Dagger dependencies
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     compile "com.google.dagger:dagger:$rootProject.daggerVersion"
-
-    compile "com.appyvet:materialrangebar:$rootProject.materialrangebarVersion"
 
     testCompile "junit:junit:$rootProject.junitVersion"
     testCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"

@@ -82,7 +82,7 @@ public class ComicDetailFragment extends Fragment implements ComicDetailPresente
 
         // Inject Presenter
         DaggerComicDetailComponent.builder()
-                .comicsRepositoryComponent(((MarvelApp) getActivity().getApplication()).getComicsRepositoryComponent())
+                .appComponent(((MarvelApp) getActivity().getApplication()).getAppComponent())
                 .comicDetailPresenterModule(new ComicDetailPresenterModule(comic))
                 .build()
                 .inject(this);
@@ -167,7 +167,7 @@ public class ComicDetailFragment extends Fragment implements ComicDetailPresente
 
     @Override
     public void displayPageCount(int pages) {
-        comicPagesTv.setText(getString(R.string.pages_format, pages));
+        comicPagesTv.setText(getResources().getQuantityString(R.plurals.pages, pages, pages));
     }
 
     private void setStatusBarColorFromBitmap(Bitmap bitmap) {

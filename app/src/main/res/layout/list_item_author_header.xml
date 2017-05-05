@@ -5,7 +5,7 @@
     android:orientation="horizontal">
 
     <ImageView
-        android:src="@drawable/ic_face_black_24dp"
+        android:src="@drawable/ic_face_24dp"
         android:layout_width="wrap_content"
         android:paddingEnd="@dimen/author_header_imageview_margin"
         android:layout_height="match_parent" />
