@@ -33,7 +33,6 @@ ext {
     supportLibraryVersion = '25.3.0'
     retrofitVersion = '2.2.0'
     gsonVersion = '2.7'
-    lombokVersion = '1.16.14'
     butterknifeVersion = '8.5.1'
     glideVersion = '3.7.0'
     rxandroidVersion = '1.2.1'

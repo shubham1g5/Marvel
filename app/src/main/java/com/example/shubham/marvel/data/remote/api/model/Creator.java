@@ -4,9 +4,10 @@ import com.example.shubham.marvel.model.Author;
 
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
 public class Creator {
     public final List<Author> items;
+
+    public Creator(List<Author> items) {
+        this.items = items;
+    }
 }
