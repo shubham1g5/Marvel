@@ -50,11 +50,14 @@ public class ComicsRepository implements ComicsDataSource {
             return remoteComics;
         } else {
             // Query the local storage if available. If not, query the network.
-            Observable<List<Comic>> localComics = getAndCacheLocalComics(capacity);
-            return Observable.concat(localComics, remoteComics)
-                    .filter(comics -> !comics.isEmpty())
-                    .first(new ArrayList<>())
-                    .toObservable();
+            return getAndCacheLocalComics(capacity)
+                    .switchMap(comics -> {
+                        if (comics.isEmpty()) {
+                            return remoteComics;
+                        } else {
+                            return Observable.just(comics);
+                        }
+                    });
         }
     }
 

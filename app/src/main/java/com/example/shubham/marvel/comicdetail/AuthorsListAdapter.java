@@ -69,7 +69,7 @@ class AuthorsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return authors.size() + 1;
+        return authors.size() == 0 ? 0 : authors.size() + 1;
     }
 
     void showAuthors(List<Author> Authors) {
