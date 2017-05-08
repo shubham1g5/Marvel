@@ -21,7 +21,9 @@ public class ComicMapper {
 
     public List<Comic> map(ComicsListResponse comicsListResponse) {
         List<Comic> comics = new ArrayList<>();
-        comicsListResponse.data.results.forEach(apiComic -> comics.add(map(apiComic)));
+        for (ApiComic apiComic : comicsListResponse.data.results) {
+            comics.add(map(apiComic));
+        }
         return comics;
     }
 
