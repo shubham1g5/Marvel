@@ -40,17 +40,16 @@ public class ComicsListPresenter extends BasePresenter<ComicsListPresenter.View>
     @Override
     protected void onRegister(View view) {
 
-        view.showRefreshing(true);
-
         addToUnsubscribe(view.onRefreshAction()
                 .doOnNext(ignored -> view.showRefreshing(true))
-                .doOnNext(ignored -> mComicsRepository.refreshComics(true))
+                .doOnNext(ignored -> mComicsRepository.refreshComics())
                 .switchMap(ignored -> mComicsRepository.getComics(CAPACITY).subscribeOn(mIoScheduler))
                 .observeOn(mUiScheduler)
                 .subscribe(getfetchComicsSuccessConsumer(view),
                         getfetchComicsErrorConsumer(view)));
 
         addToUnsubscribe(mComicsRepository.getComics(CAPACITY)
+                .doOnSubscribe(disposable -> view.showRefreshing(true))
                 .subscribeOn(mIoScheduler)
                 .observeOn(mUiScheduler)
                 .subscribe(getfetchComicsSuccessConsumer(view),

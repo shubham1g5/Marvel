@@ -88,7 +88,7 @@ public class ComicsRepository implements ComicsDataSource {
         return mLocalComicsDataSource.getAuthors(comicId);
     }
 
-    public void refreshComics(boolean refresh) {
+    public void refreshComics() {
         mCacheIsDirty = true;
     }
 }
